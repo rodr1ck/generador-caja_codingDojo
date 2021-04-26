@@ -1,24 +1,27 @@
-import logo from './logo.svg';
+import {useState, useEffect} from 'react';
+import FormularioColor from './components/FormularioColor'
 import './App.css';
+import PadreCajas from './components/PadreCajas';
+import Caja from './components/Caja';
 
 function App() {
+  const [colores, setColores] = useState([])
+  const [color,setColor] = useState({color:'red'})
+
+  useEffect(() => {
+    setColores((existentes) =>[color, ...existentes])
+  }, [color]);
+
+console.log(colores)
+const cajas = colores.map((c, index) => <Caja color={c} key={index} />)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <FormularioColor addColor={setColor}/>
+      <PadreCajas>
+        {cajas}
+      </PadreCajas>
+    </>
   );
 }
 
